@@ -16,12 +16,11 @@ public class Account {
 		return true;
 	}
 	
-	public boolean withdraw(double amt){
+	public void withdraw(double amt) throws OverdraftException {
 		if(amt>this.balance){
-			return false;
+			System.out.println("×Ê½ð²»×ã"+(amt-this.balance));
 		}else{
 			this.balance -= amt;
-			return true;
 		}	
 	}
 }

@@ -18,19 +18,22 @@ public class CheckingAccount extends Account{
 		this.overdraftProtection = overdraftProtection;
 	}
 	
-	public boolean withdraw(double amt){
-		if(protectedBy!=null&&protectedBy.getBalance()>(amt-this.getBalance())){
-				protectedBy.withdraw(amt - this.getBalance());
-				this.balance =0;
-				return true;
-			}
-		else if (amt<=this.getBalance()){
-			this.balance -= amt;
-			return true;
+	public void withdraw(double amt) throws OverdraftException{
+//		if(protectedBy!=null&&protectedBy.getBalance()>(amt-this.getBalance())){
+//				protectedBy.withdraw(amt - this.getBalance());
+//				this.balance =0;
+//			}
+		if (amt<=this.getBalance()){
+			this.balance -= amt;	
 		}
-		else{
-			
-			return false;
+		else if (amt>this.getBalance()&&overdraftProtection == 0){
+			System.out.println("Exception: no overdraft protection Deficit: "+(amt-this.getBalance()));	
+		}else if (amt>this.getBalance()&&overdraftProtection<(amt-this.getBalance())){
+			System.out.println("Exception: Insufficient funds for"
+					+ " overdraft protection Deficit: "+amt);	
+		}else if (amt>this.getBalance()&&overdraftProtection>(amt-this.getBalance())){
+			overdraftProtection -= amt - this.getBalance();
+			this.balance = 0;
 		}
 	}
 	
