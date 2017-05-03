@@ -1,27 +1,38 @@
 package banking;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class Bank {
-	private Customer[] customers;
-	private int numberOfCustomer;
+	
+	private List<Customer> customers;
 	
 	private Bank(){
-		customers = new Customer[6];
+		customers = new ArrayList<Customer>();
 	}
+	
+	public static Bank instance = new Bank();
 	
 	public static Bank getBank(){
-		return new Bank();
+		return instance;
+		
 	}
-	
 	public void addCustomer(String f,String l){
-		customers[numberOfCustomer++] = new Customer(f,l);
+		Customer cust = new Customer(f,l);
+		customers.add(cust);
 	}
 	
 	public int getNumOfCustomers(){
-		return numberOfCustomer;
+		return customers.size();
 	}
 	
 	public Customer getCustomer(int index){
-		return customers[index];
+		return customers.get(index);
+	}
+	
+	public Iterator<Customer> getCustomer(){
+		return customers.iterator();
 	}
 	
 }
